@@ -3,8 +3,12 @@
   debug: var=packages
 
 - name: update cache
-  apt: update_cache=yes
+  sudo: true
+  apt: >
+    update_cache=yes
+    cache_valid_time=3600
 
 - name: ensure packages exist
+  sudo: true
   apt: pkg={{item}} state=latest
   with_items: packages
