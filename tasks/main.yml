@@ -7,8 +7,16 @@
   apt: >
     update_cache=yes
     cache_valid_time=3600
+  when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
 
 - name: ensure packages exist
   sudo: true
   apt: pkg={{item}} state=latest
   with_items: packages
+  when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+
+- name: ensure packages exist
+  sudo: true
+  yum: name={{item}} state=latest
+  with_items: packages
+  when: ansible_distribution == 'Redhat' or ansible_distribution == 'CentOS'
